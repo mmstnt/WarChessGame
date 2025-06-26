@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInputControl",
+    "maps": [
+        {
+            "name": "GamePlay",
+            "id": "295bd464-fa4b-4e93-97d4-fbe05e323664",
+            "actions": [
+                {
+                    "name": "Confirm",
+                    "type": "Button",
+                    "id": "d9f26204-460d-4c4f-b359-6aef1836e657",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b3c463b5-34a9-4470-afe2-139f3983f189",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

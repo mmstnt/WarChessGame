@@ -742,7 +742,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb618346a461d2f4181d1afd8f8741f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneLoadEvent: {fileID: 11400000, guid: 5ed627d511851294d959e9bec84de063, type: 2}
   newGameEvent: {fileID: 11400000, guid: befe91625c7119c49bc71ee623e1e438, type: 2}
+  afterSceneLoadedEvent: {fileID: 11400000, guid: c80d0fa447e811346a77f3941caa1ea3, type: 2}
+  fadeEvent: {fileID: 11400000, guid: 269decbdadfaf044f96c6f2a28c7316f, type: 2}
+  sceneUnloadEvent: {fileID: 11400000, guid: 0b90ccdd086497845b72f041cdbfb5bd, type: 2}
+  firstLoadScene: {fileID: 11400000, guid: f48788038d9b3e24cac57bdcddfb291d, type: 2}
+  currentLoadedScene: {fileID: 0}
+  fadeDuration: 1
 --- !u!1 &692869341
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,53 @@
 {
-    "a": "",
-    "b": 0,
-    "D": [
-        "5433"
+    "playerName": "",
+    "basicAttributeListKey": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "basicAttributeListValue": [
+        9,
+        13,
+        18,
+        7,
+        13,
+        18
+    ],
+    "characterList": [
+        {
+            "characterName": "主角",
+            "characterImage": {
+                "instanceID": 0
+            },
+            "characterFavorability": 0,
+            "characterID": 0
+        },
+        {
+            "characterName": "曉琪",
+            "characterImage": {
+                "instanceID": 0
+            },
+            "characterFavorability": 0,
+            "characterID": 0
+        },
+        {
+            "characterName": "迦夜",
+            "characterImage": {
+                "instanceID": 0
+            },
+            "characterFavorability": 0,
+            "characterID": 0
+        },
+        {
+            "characterName": "伊蘭雅",
+            "characterImage": {
+                "instanceID": 0
+            },
+            "characterFavorability": 0,
+            "characterID": 0
+        }
     ]
 }

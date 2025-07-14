@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 
 public class DiaLogManager : MonoBehaviour
 {
+    [Header("監聽")]
+    public VoidEventSO gameConfirmEvent;
     [Header("文本")]
     public TextAsset dialogDataFile;
     [Header("圖像")]
@@ -22,33 +24,28 @@ public class DiaLogManager : MonoBehaviour
     [Header("對話索引")]
     public int dialogIndex;
     public string[] dialogRows;
-    [Header("對話選項按鈕")]
+    [Header("組件")]
     public Transform buttleGroup;
     public GameObject dialogOptionsButton;
 
-    private PlayerInputControl playerInputControl;
     private bool isDialog;
 
     private void Awake()
     {
-        playerInputControl = new PlayerInputControl();
-
         readText(dialogDataFile);
     }
 
     private void OnEnable()
     {
-        playerInputControl.Enable();
-        playerInputControl.GamePlay.Confirm.started += onConfirm;
+        gameConfirmEvent.onEventRaised += onGameConfirmEvent;
     }
 
     private void OnDisable()
     {
-        playerInputControl.Disable();
-        playerInputControl.GamePlay.Confirm.started -= onConfirm;
+        gameConfirmEvent.onEventRaised -= onGameConfirmEvent;
     }
 
-    private void onConfirm(InputAction.CallbackContext context)
+    private void onGameConfirmEvent()
     {
         onClickNext();
     }
@@ -97,7 +94,7 @@ public class DiaLogManager : MonoBehaviour
                 generateOptionButton(i);
                 isDialog = false;
             }
-            else if (cells[0] == "結束" && int.Parse(cells[1]) == dialogIndex) 
+            else if (cells[0] == "結束" && int.Parse(cells[1]) == dialogIndex)
             {
                 Debug.Log("結束");
                 updataText(cells[2], cells[4]);

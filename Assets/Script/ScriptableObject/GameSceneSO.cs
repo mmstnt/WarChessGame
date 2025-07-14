@@ -5,5 +5,6 @@ using UnityEngine.AddressableAssets;
 public class GameSceneSO : ScriptableObject
 {
     public SceneType sceneType;
+    public Sprite backGround;
     public AssetReference sceneReference;
 }

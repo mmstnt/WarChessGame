@@ -19,9 +19,11 @@ public class SceneManager : MonoBehaviour
     public SceneLoadEventSO sceneUnloadEvent;
 
     [Header("³õ´º")]
-    public GameSceneSO firstLoadScene;
-    public GameSceneSO currentLoadedScene;
+    public GameSceneSO menuScene;
+    public GameSceneSO createCharacterScene;
+    public GameSceneSO dialogScene;
 
+    private GameSceneSO currentLoadedScene;
     private GameSceneSO sceneToLoad;
     private bool fadeScreen;
     private bool isLoading;
@@ -34,6 +36,12 @@ public class SceneManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+    }
+
+    private void Start()
+    {
+        sceneLoadEvent.RaiseLoadRequestEvent(menuScene, true);
+        
     }
 
     private void OnEnable()
@@ -50,7 +58,7 @@ public class SceneManager : MonoBehaviour
 
     private void onNewGameEvent()
     {
-        sceneToLoad = firstLoadScene;
+        sceneToLoad = createCharacterScene;
         sceneLoadEvent.RaiseLoadRequestEvent(sceneToLoad, true);
     }
 
@@ -84,21 +92,22 @@ public class SceneManager : MonoBehaviour
 
         sceneUnloadEvent.RaiseLoadRequestEvent(sceneToLoad, true);
 
-        if (currentLoadedScene != null)
-        {
-            yield return currentLoadedScene.sceneReference.UnLoadScene();
-        }
+        //if (currentLoadedScene != null)
+        //{
+        //    yield return currentLoadedScene.sceneReference.UnLoadScene();
+        //}
 
         LoadNewScene();
     }
 
     private void LoadNewScene()
     {
-        var loadingOption = sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-        loadingOption.Completed += onLoadCompleted;
+        //var loadingOption = sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+        //loadingOption.Completed += onLoadCompleted;
+        onLoadCompleted();
     }
 
-    private void onLoadCompleted(AsyncOperationHandle<SceneInstance> obj)
+    private void onLoadCompleted()
     {
         currentLoadedScene = sceneToLoad;
 

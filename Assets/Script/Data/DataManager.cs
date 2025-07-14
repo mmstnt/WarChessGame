@@ -10,8 +10,10 @@ public class DataManager : MonoBehaviour
     public static DataManager instance;
     [Header("ºÊÅ¥")]
     public VoidEventSO newGameEvent;
+    [Header("¸ê®Æ")]
+    public CharacterListSO characterList;
 
-    public Data saveData;
+    public Data gameData;
 
     private void Awake()
     {
@@ -37,16 +39,18 @@ public class DataManager : MonoBehaviour
 
     private void onNewGameEvent()
     {
-        //saveData = new Data();
-        save("save01", saveData, "Save");
-        saveData = load("save2", "Save");
+        gameData = new Data(characterList);
+        gameData = load("save01", "Save");
+        Debug.Log(gameData.basicAttributeList[BasicAttribute.Strength]);
     }
 
     public static void save(string name, Data data, string dir) 
     {
+        data.saveDictionary();
+
         string jsonData = JsonUtility.ToJson(data, true);
         string filePath = $"{Application.dataPath}/{dir}";
-
+        
         Directory.CreateDirectory(filePath);
         File.WriteAllText($"{filePath}/{name}.sav", jsonData);
     }
@@ -71,6 +75,9 @@ public class DataManager : MonoBehaviour
             return default(Data);
         }
 
-        return JsonUtility.FromJson<Data>(jsonData);
+        Data loadData = JsonUtility.FromJson<Data>(jsonData);
+        loadData.loadDictionary();
+
+        return loadData;
     }
 }

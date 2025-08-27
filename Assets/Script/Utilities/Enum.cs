@@ -15,3 +15,9 @@ public enum BasicAttribute
     Wisdom,
     Charisma
 }
+
+public enum CharacterType
+{
+    Main,
+    Other
+}

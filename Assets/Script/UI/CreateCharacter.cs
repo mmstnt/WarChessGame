@@ -70,7 +70,7 @@ public class CreateCharacter : MonoBehaviour
     private void onCreateCharacterFinishEvent()
     {
         DataManager.instance.gameData.playerName = playerNameInput.text;
-        DataManager.instance.gameData.basicAttributeList = this.basicAttributeList;
+        DataManager.instance.gameData.basicAttributeDic = this.basicAttributeList;
         DataManager.save("save01", DataManager.instance.gameData, "Save");
 
         SceneManager.instance.sceneLoadEvent.LoadRequestEvent(SceneManager.instance.dialogScene, true);

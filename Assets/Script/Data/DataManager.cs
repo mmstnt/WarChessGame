@@ -10,6 +10,7 @@ public class DataManager : MonoBehaviour
     public static DataManager instance;
     [Header("ºÊÅ¥")]
     public VoidEventSO newGameEvent;
+    public VoidEventSO loadGameEvent;
     [Header("¸ê®Æ")]
     public CharacterListSO characterList;
 
@@ -30,18 +31,25 @@ public class DataManager : MonoBehaviour
     private void OnEnable()
     {
         newGameEvent.onEventRaised += onNewGameEvent;
+        loadGameEvent.onEventRaised += onLoadGameEvent;
     }
 
     private void OnDisable()
     {
         newGameEvent.onEventRaised -= onNewGameEvent;
+        loadGameEvent.onEventRaised -= onLoadGameEvent;
     }
 
     private void onNewGameEvent()
     {
         gameData = new Data(characterList);
+        //gameData = load("save01", "Save");
+        //Debug.Log(gameData.basicAttributeDictionary[BasicAttribute.Strength]);
+    }
+
+    private void onLoadGameEvent()
+    {
         gameData = load("save01", "Save");
-        Debug.Log(gameData.basicAttributeList[BasicAttribute.Strength]);
     }
 
     public static void save(string name, Data data, string dir) 

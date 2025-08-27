@@ -20,13 +20,16 @@ public class DiaLogManager : MonoBehaviour
     public TMP_Text dialogText;
     [Header("角色圖片")]
     public List<Sprite> characterImageList = new List<Sprite>();
-    public Dictionary<string, Sprite> characterImageDic = new Dictionary<string, Sprite>();
     [Header("對話索引")]
     public int dialogIndex;
-    public string[] dialogRows;
+    //public string[] dialogRows;
+    public Dictionary<string, TextSO> dialogRowDic = new Dictionary<string, TextSO>();
+    public Dictionary<string, Transform> headImageDic = new Dictionary<string, Transform>();
     [Header("組件")]
     public Transform buttleGroup;
+    public Transform headGroup;
     public GameObject dialogOptionsButton;
+    public GameObject headImage;
 
     private bool isDialog;
 
@@ -45,9 +48,23 @@ public class DiaLogManager : MonoBehaviour
         gameConfirmEvent.onEventRaised -= onGameConfirmEvent;
     }
 
-    private void onGameConfirmEvent()
+    public void readText(TextAsset textAsset) 
     {
-        onClickNext();
+        string[] dialogRows = textAsset.text.Split("\n");
+        foreach(var row in dialogRows) 
+        {
+            string[] cell = row.Split("\t");
+            TextSO textSO = new TextSO();
+            textSO.Type = cell[0];
+            textSO.ID = cell[1];
+            textSO.Character = cell[2];
+            textSO.Site = cell[3];
+            textSO.Content = cell[4];
+            textSO.ToID = cell[5];
+            textSO.Effect = cell[6];
+            textSO.Target = cell[7];
+            dialogRowDic[textSO.ID] = textSO;
+        }
     }
 
     public void updataText(string name, string dialog) 
@@ -56,18 +73,45 @@ public class DiaLogManager : MonoBehaviour
         dialogText.text = dialog;
     }
 
-    public void updateImage(string name, string vector)
+    public void updateImage(string name, string site)
     {
+        foreach (var headImage in headImageDic) 
+        {
+            headImage.Value.GetComponent<Image>().color = Color.gray;
+        }
+        string[] siteRow = site.Split(";");
+        foreach (var row in siteRow)
+        {
+            string[] siteEffect = row.Split(",");
+            if (siteEffect[0] == "show") 
+            {
+                if (!headImageDic.ContainsKey(siteEffect[1]))
+                {
+                    GameObject head = Instantiate(headImage, headGroup);
+                    headImageDic[siteEffect[1]] = head.transform;
+                    headImageDic[siteEffect[1]].GetComponent<Image>().sprite = DataManager.instance.gameData.characterDic[siteEffect[1]].characterImage;
+                    headImageDic[siteEffect[1]].GetComponent<Image>().color = Color.white;
+                    headImageDic[siteEffect[1]].position = new Vector2(float.Parse(siteEffect[2]), float.Parse(siteEffect[3]));
+                    headImageDic[siteEffect[1]].rotation = Quaternion.Euler(0, siteEffect[3] == "0" ? 0 : 180, 0);
+                    headImageDic[siteEffect[1]].SetAsLastSibling();
+                }
+                else
+                {
+                    headImageDic[siteEffect[1]].GetComponent<Image>().sprite = DataManager.instance.gameData.characterDic[siteEffect[1]].characterImage;
+                    headImageDic[siteEffect[1]].GetComponent<Image>().color = Color.white;
+                    headImageDic[siteEffect[1]].GetComponent<DialogHead>().moveTo(new Vector2(float.Parse(siteEffect[2]), float.Parse(siteEffect[3])),5);
+                    headImageDic[siteEffect[1]].rotation = Quaternion.Euler(0, siteEffect[3] == "0" ? 0 : 180, 0);
+                    headImageDic[siteEffect[1]].SetAsLastSibling();
+                }
+            }
+        }
+        
         //sprite.sprite = characterImageDic[name];
     }
 
-    public void readText(TextAsset textAsset) 
+    private void onGameConfirmEvent()
     {
-        dialogRows = textAsset.text.Split("\n");
-        foreach(var row in dialogRows) 
-        {
-            string[] cell = row.Split(",");
-        }
+        onClickNext();
     }
 
     public void onClickNext() 
@@ -77,57 +121,53 @@ public class DiaLogManager : MonoBehaviour
 
     public void showDialogRow() 
     {
-        for (int i = 0; i < dialogRows.Length; i++)  
+        TextSO row = dialogRowDic[dialogIndex.ToString()];
+        if (row.Type == "對話")
         {
-            string[] cells = dialogRows[i].Split(",");
-            if (cells[0] == "對話" && int.Parse(cells[1]) == dialogIndex)
-            {
-                updataText(cells[2], cells[4]);
-                updateImage(cells[2], cells[3]);
+            updataText(row.Character, row.Content);
+            updateImage(row.Character, row.Site);
 
-                dialogIndex = int.Parse(cells[5]);
-                isDialog = true;
-                break;
-            }
-            else if (cells[0] == "選項" && int.Parse(cells[1]) == dialogIndex && isDialog)
-            {
-                generateOptionButton(i);
-                isDialog = false;
-            }
-            else if (cells[0] == "結束" && int.Parse(cells[1]) == dialogIndex)
-            {
-                Debug.Log("結束");
-                updataText(cells[2], cells[4]);
-                updateImage(cells[2], cells[3]);
-                isDialog = false;
-            }
+            dialogIndex = int.Parse(row.ToID);
+            isDialog = true;
+        }
+        else if (row.Type == "選項" && isDialog)
+        {
+            generateOptionButton(dialogIndex);
+            isDialog = false;
+        }
+        else if (row.Type == "結束")
+        {
+            Debug.Log("結束");
+            updataText(row.Character, row.Content);
+            updateImage(row.Character, row.Site);
+            isDialog = false;
         }
     }
 
     public void generateOptionButton(int index) 
     {
-        string[] cells = dialogRows[index].Split(",");
+        TextSO row = dialogRowDic[index.ToString()];
 
-        if (cells[0] == "選項") 
+        if (row.Type == "選項")
         {
             GameObject button = Instantiate(dialogOptionsButton, buttleGroup);
-            button.GetComponentInChildren<TMP_Text>().text = cells[4];
+            button.GetComponentInChildren<TMP_Text>().text = row.Content;
             button.GetComponent<Button>().onClick.AddListener
                 (
                 delegate
                 {
-                    onOptionClick(int.Parse(cells[5]));
-                    if (cells[6] != "") 
+                    onOptionClick(int.Parse(row.ToID));
+                    if (row.Effect != "")
                     {
-                        string[] effect = cells[6].Split("@");
-                        cells[7] = Regex.Replace(cells[7], "[\r\n]", "");
-                        onOptionEffect(effect[0], int.Parse(effect[1]), cells[7]);
+                        string[] effect = row.Effect.Split("@");
+                        row.Target = Regex.Replace(row.Target, "[\r\n]", "");
+                        onOptionEffect(effect[0], int.Parse(effect[1]), row.Target);
                     }
                 }
                 );
-            if (index + 1 < dialogRows.Length) 
+            if (dialogRowDic.ContainsKey((index + 1).ToString()))
             {
-                generateOptionButton(index+1);
+                generateOptionButton(index + 1);
             }
         }
     }

@@ -14,18 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charactersList:
   - characterName: "\u4E3B\u89D2"
-    characterImage: {fileID: 0}
+    characterImage: {fileID: 21300000, guid: 5458b569a46f65a46a00214d9bbcbf44, type: 3}
     characterFavorability: 0
-    characterID: 0
+    characterID: 90001
   - characterName: "\u66C9\u742A"
-    characterImage: {fileID: 0}
+    characterImage: {fileID: 21300000, guid: ddc6df8f8351d374886fa0602d99038c, type: 3}
     characterFavorability: 0
-    characterID: 0
+    characterID: 90002
   - characterName: "\u8FE6\u591C"
-    characterImage: {fileID: 0}
+    characterImage: {fileID: 21300000, guid: 87c76a8c5f2aa7447b0f1b297d7d387a, type: 3}
     characterFavorability: 0
-    characterID: 0
+    characterID: 90003
+  - characterName: "\u53E4\u96F7\u76AE"
+    characterImage: {fileID: 21300000, guid: a274b2b9722b96f49829a4a4f7594390, type: 3}
+    characterFavorability: 0
+    characterID: 90004
   - characterName: "\u4F0A\u862D\u96C5"
     characterImage: {fileID: 0}
     characterFavorability: 0
-    characterID: 0
+    characterID: 90005

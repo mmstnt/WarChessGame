@@ -5,13 +5,19 @@ using UnityEngine.InputSystem;
 
 public class GameEventManager : MonoBehaviour
 {
+    public static GameEventManager instance;
     [Header("¼s¼½")]
     public VoidEventSO gameConfirmEvent;
 
-    private PlayerInputControl playerInputControl;
+    public PlayerInputControl playerInputControl;
 
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
+
         playerInputControl = new PlayerInputControl();
     }
 

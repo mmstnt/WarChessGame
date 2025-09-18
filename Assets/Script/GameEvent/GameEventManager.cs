@@ -8,6 +8,7 @@ public class GameEventManager : MonoBehaviour
     public static GameEventManager instance;
     [Header("¼s¼½")]
     public VoidEventSO gameConfirmEvent;
+    public VoidEventSO mouseClickEvent;
 
     public PlayerInputControl playerInputControl;
 
@@ -25,16 +26,23 @@ public class GameEventManager : MonoBehaviour
     {
         playerInputControl.Enable();
         playerInputControl.GamePlay.Confirm.started += onConfirm;
+        playerInputControl.GamePlay.MouseClick.started += onMouseClick;
     }
 
     private void OnDisable()
     {
         playerInputControl.Disable();
         playerInputControl.GamePlay.Confirm.started -= onConfirm;
+        playerInputControl.GamePlay.MouseClick.started -= onMouseClick;
     }
 
     private void onConfirm(InputAction.CallbackContext context)
     {
         gameConfirmEvent.raiseEvent();
+    }
+
+    private void onMouseClick(InputAction.CallbackContext context)
+    {
+        mouseClickEvent.raiseEvent();
     }
 }

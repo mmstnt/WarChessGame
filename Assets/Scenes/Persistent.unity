@@ -2235,6 +2235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConfirmEvent: {fileID: 11400000, guid: a7d6a3b8fd41e8346988d851c82e4d59, type: 2}
+  mouseClickEvent: {fileID: 11400000, guid: 601242dc50aa35242814351933ad34e0, type: 2}
 --- !u!1 &1280541380
 GameObject:
   m_ObjectHideFlags: 0

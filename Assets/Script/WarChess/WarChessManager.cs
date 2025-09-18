@@ -1,0 +1,129 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class WarChessManager : MonoBehaviour
+{
+    public Transform currentTarget;
+    public HexRenderer currentCell;
+    public UnitChess currentUnit;
+    public WarChessManagerState currentState;
+
+    public GameObject A;
+
+    [Header("∫ ≈•")]
+    public VoidEventSO mouseClickEvent;
+
+    private void OnEnable()
+    {
+        mouseClickEvent.onEventRaised += mouseInput;
+    }
+
+    private void OnDisable()
+    {
+        mouseClickEvent.onEventRaised -= mouseInput;
+    }
+
+    private void Update()
+    {
+        mouseDeteet();
+    }
+
+    private void mouseInput() 
+    {
+        switch (currentState) 
+        {
+            case WarChessManagerState.PlaceChess:
+                if (currentCell != null)
+                {
+                    GameObject unit = Instantiate(A);
+                    unit.GetComponent<UnitChess>().setCell(currentCell);
+
+                    //
+                    currentState = WarChessManagerState.ChooseChess;
+                }
+                break;
+            case WarChessManagerState.ChooseChess:
+                if (currentUnit != null) 
+                {
+                    currentUnit.enableSelect();
+
+                    //
+                    currentState = WarChessManagerState.ActionChess;
+                }
+                break;
+            case WarChessManagerState.ActionChess:
+                if (currentCell != null) 
+                {
+                    currentUnit.setCell(currentCell);
+
+                    //
+                    currentState = WarChessManagerState.ChooseChess;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void mouseDeteet() 
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Ray mouseRay = Camera.main.ScreenPointToRay(mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(mouseRay, out hit)) 
+        {
+            
+            currentTarget = hit.transform;  
+
+            HexRenderer cell = currentTarget.GetComponent<HexRenderer>();
+            if (cell != null) 
+            {
+                if (currentState == WarChessManagerState.PlaceChess) 
+                {
+                    if (currentCell != null && currentCell != cell)
+                    {
+                        currentCell.setColor(HexGridLayouts.instance.baseColor);
+                    }
+
+                    currentCell = cell;
+                    currentCell.setColor(HexGridLayouts.instance.highColor);
+                }
+                else if (currentState == WarChessManagerState.ActionChess)
+                {
+                    currentCell = cell;
+                    HexGridLayouts.instance.caculatePath(currentUnit.currentCell, cell);
+                }
+                
+            }
+
+            UnitChess unit = currentTarget.GetComponent<UnitChess>();
+            if (unit != null) 
+            {
+                if (currentUnit != null && currentUnit != unit) 
+                {
+                    currentUnit.disableSelect();
+                }
+                currentUnit = unit;
+                currentUnit.preSelect();
+            }
+            else 
+            {
+                if (currentUnit != null) 
+                {
+                    currentUnit.disableSelect();
+                }
+            }
+            //CameraControl.instance.followTransform = currentTarget;
+        }
+        else 
+        {
+            if (currentCell != null) 
+            {
+                currentCell.setColor(HexGridLayouts.instance.baseColor);
+                currentCell = null;
+            }
+        }
+    }
+}

@@ -14,11 +14,18 @@ public class HexRenderer : MonoBehaviour
 
     private List<Face> faces;
 
+    [Header("瓦片設定")]
     public Material material;
     public float innerSize;
     public float outerSize;
     public float height;
     public bool isFlatTopped;
+
+    [Header("網格計算")]
+    public int g;
+    public int f;
+    public HexRenderer parent;
+    public bool isObstacle;
 
     private void Awake()
     {

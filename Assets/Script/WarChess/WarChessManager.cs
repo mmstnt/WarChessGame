@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class WarChessManager : MonoBehaviour
 {
+    public static WarChessManager instance;
+
     public Transform currentTarget;
     public HexRenderer currentCell;
     public UnitChess currentUnit;
@@ -14,6 +16,14 @@ public class WarChessManager : MonoBehaviour
 
     [Header("∫ ≈•")]
     public VoidEventSO mouseClickEvent;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
+    }
 
     private void OnEnable()
     {
@@ -56,15 +66,26 @@ public class WarChessManager : MonoBehaviour
             case WarChessManagerState.ActionChess:
                 if (currentCell != null) 
                 {
-                    currentUnit.setCell(currentCell);
-
+                    currentUnit.moveToCell(HexGridLayouts.instance.pathList);
                     //
-                    currentState = WarChessManagerState.ChooseChess;
+                    currentState = WarChessManagerState.MoveChess;
+                }
+                break;
+            case WarChessManagerState.MoveChess:
+                if (currentCell != null)
+                {
+                    
+                    //
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    public void switchState(WarChessManagerState state) 
+    {
+        currentState = state;
     }
 
     private void mouseDeteet() 

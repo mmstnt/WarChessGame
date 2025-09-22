@@ -26,7 +26,8 @@ public enum WarChessManagerState
 {
     PlaceChess,
     ChooseChess,
-    ActionChess
+    ActionChess,
+    MoveChess
 }
 
 public enum UnitChessState 

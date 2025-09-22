@@ -54,6 +54,8 @@ public class HexGridLayouts : MonoBehaviour
                 {
                     pathList[i].setColor(highColor);
                 }
+                pathList.Reverse();
+                pathList.RemoveAt(0);
                 break;
             }
             else 

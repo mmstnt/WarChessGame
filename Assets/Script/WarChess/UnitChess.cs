@@ -12,12 +12,16 @@ public class UnitChess : MonoBehaviour
 
     public UnitChessState currentState;
     public HexRenderer currentCell;
+    public GameObject unitHealthBar;
 
     private Outline selfOutline;
+    private UnitChessHealthBar selfHealthBar;
 
     public void Awake()
     {
         selfOutline = GetComponent<Outline>();
+        selfHealthBar = Instantiate(unitHealthBar).GetComponent<UnitChessHealthBar>();
+        selfHealthBar.setUnitTarget(this);
     }
 
     //public void OnValidate()
@@ -62,6 +66,9 @@ public class UnitChess : MonoBehaviour
     public void moveToCell(List<HexRenderer> path) 
     {
         StartCoroutine(moveCor(path));
+
+        ////
+        selfHealthBar.changeHealth();
     }
 
     private IEnumerator moveCor(List<HexRenderer> path) 
@@ -81,7 +88,7 @@ public class UnitChess : MonoBehaviour
 
             while (true)
             {
-                workTime += Time.deltaTime;
+                workTime += Time.deltaTime * 4;
                 transform.position = Vector3.Lerp(originPos, desPos, workTime);
                 transform.rotation = Quaternion.Lerp(originRot, desRot, workTime * 2);
 

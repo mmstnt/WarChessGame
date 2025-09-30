@@ -146,7 +146,6 @@ public class HexGridLayouts : MonoBehaviour
         {
             neighboursList.Add(cellList[index - 1]);
             neighboursList.Add(cellList[index + gridSize.x]);
-            neighboursList.Add(cellList[index + gridSize.x + 1]);
         }
         else if (index == cellList.Count - 1)
         {
@@ -158,7 +157,6 @@ public class HexGridLayouts : MonoBehaviour
         {
             neighboursList.Add(cellList[index + 1]);
             neighboursList.Add(cellList[index - gridSize.x]);
-            neighboursList.Add(cellList[index - gridSize.x - 1]);
         }
         else if (index / gridSize.x == 0)
         {

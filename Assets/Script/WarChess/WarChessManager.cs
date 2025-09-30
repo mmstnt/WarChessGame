@@ -140,7 +140,7 @@ public class WarChessManager : MonoBehaviour
         }
         else 
         {
-            if (currentCell != null) 
+            if (currentCell != null && currentState != WarChessManagerState.ChooseChess)  
             {
                 currentCell.setColor(HexGridLayouts.instance.baseColor);
                 currentCell = null;

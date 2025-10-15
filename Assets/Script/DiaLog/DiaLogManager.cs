@@ -111,7 +111,10 @@ public class DiaLogManager : MonoBehaviour
 
     private void onGameConfirmEvent()
     {
-        onClickNext();
+        if (SceneManager.instance.currentLoadedScene.sceneType == SceneType.Dialog)  
+        {
+            onClickNext();
+        }
     }
 
     public void onClickNext() 

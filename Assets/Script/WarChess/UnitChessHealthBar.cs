@@ -33,6 +33,6 @@ public class UnitChessHealthBar : MonoBehaviour
 
     public void changeHealth()
     {
-        selfBar.value = currentUnitTarget.battleData.curHealth * 1.0f / currentUnitTarget.battleData.maxHealth;
+        selfBar.value = currentUnitTarget.battleData.curHealth * 1.0f / currentUnitTarget.battleData.healthMax;
     }
 }

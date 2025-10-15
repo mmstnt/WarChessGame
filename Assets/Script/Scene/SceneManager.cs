@@ -23,7 +23,7 @@ public class SceneManager : MonoBehaviour
     public GameSceneSO createCharacterScene;
     public GameSceneSO dialogScene;
 
-    private GameSceneSO currentLoadedScene;
+    public GameSceneSO currentLoadedScene;
     private GameSceneSO sceneToLoad;
     private bool fadeScreen;
     private bool isLoading;

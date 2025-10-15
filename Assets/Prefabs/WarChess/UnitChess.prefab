@@ -119,10 +119,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94115df3774aa5543ac36cd2402164a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 0
+  test: 50
   battleData:
-    maxHealth: 50
-    curHealth: 10
+    healthMax: 255
+    actionPointsMax: 8
+    magicPointsMax: 10
+    actionPointsRecovery: 3
+    magicPointsRecovery: 1
+    movement: 5
+    hitRate: 100
+    criticalHitRate: 48
+    retaliationRate: 42
+    dodgeRate: 36
+    curHealth: 255
+    curActionPoints: 0
+    curMagicPoints: 0
+    curActionPointsRecovery: 0
+    curMagicPointsRecovery: 0
+    curMovement: 0
   currentState: 0
   currentCell: {fileID: 0}
   unitHealthBar: {fileID: 6742582249732164110, guid: 9229f13cca9244f43a0b7ddb559fdb23, type: 3}

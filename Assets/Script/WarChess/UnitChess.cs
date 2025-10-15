@@ -24,15 +24,15 @@ public class UnitChess : MonoBehaviour
         selfHealthBar.setUnitTarget(this);
     }
 
-    //public void OnValidate()
-    //{
-    //    Dictionary<BasicAttribute, int> testAttribute = new Dictionary<BasicAttribute, int>();
-    //    foreach (BasicAttribute attribute in Enum.GetValues(typeof(BasicAttribute)))
-    //    {
-    //        testAttribute[attribute] = test;
-    //    }
-    //    battleData = new BattleData(testAttribute);
-    //}
+    public void OnValidate()
+    {
+        Dictionary<BasicAttribute, int> testAttribute = new Dictionary<BasicAttribute, int>();
+        foreach (BasicAttribute attribute in Enum.GetValues(typeof(BasicAttribute)))
+        {
+            testAttribute[attribute] = test;
+        }
+        battleData = new BattleData(testAttribute);
+    }
 
     public void preSelect()
     {

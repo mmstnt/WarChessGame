@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class UnitChessHealthBar : MonoBehaviour
 {
     [SerializeField]
-    Vector2 offset;
+    public Vector2 offset;
+    public UnitChess currentUnitTarget;
 
-    Slider selfBar;
-    UnitChess currentUnitTarget;
+    private Slider selfBar;
 
     private void Awake()
     {
@@ -20,7 +20,8 @@ public class UnitChessHealthBar : MonoBehaviour
     {
         if (currentUnitTarget != null) 
         {
-            Vector3 desPos = Camera.main.WorldToScreenPoint(currentUnitTarget.transform.position);
+            Vector3 desPos = currentUnitTarget.transform.position;
+            //Vector3 desPos = Camera.main.WorldToScreenPoint(currentUnitTarget.transform.position);
             transform.position = desPos + Vector3.up * offset.y + Vector3.right * offset.x;
         }
     }

@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 public class WarChessManager : MonoBehaviour
 {
     public static WarChessManager instance;
-
+    [Header("²Õ¥ó")]
     public Transform currentTarget;
     public HexRenderer currentCell;
     public UnitChess currentUnit;
+    public UnitChess currentChooseUnit;
     public WarChessManagerState currentState;
+    public Transform unitHealthBarGroup;
 
     public GameObject A;
 
@@ -47,28 +49,31 @@ public class WarChessManager : MonoBehaviour
             case WarChessManagerState.PlaceChess:
                 if (currentCell != null)
                 {
-                    GameObject unit = Instantiate(A);
-                    unit.GetComponent<UnitChess>().setCell(currentCell);
+                    currentState = WarChessManagerState.ChooseChess;
 
                     //
-                    currentState = WarChessManagerState.ChooseChess;
+                    currentCell.setColor(HexGridLayouts.instance.baseColor);
+                    GameObject unit = Instantiate(A);
+                    unit.GetComponent<UnitChess>().setCell(currentCell);
                 }
                 break;
             case WarChessManagerState.ChooseChess:
                 if (currentUnit != null) 
                 {
-                    currentUnit.enableSelect();
+                    currentState = WarChessManagerState.ActionChess;
 
                     //
-                    currentState = WarChessManagerState.ActionChess;
+                    currentUnit.currentCell.setColor(HexGridLayouts.instance.chooseColor);
+                    currentChooseUnit = currentUnit;
+                    currentChooseUnit.enableSelect();
                 }
                 break;
             case WarChessManagerState.ActionChess:
                 if (currentCell != null) 
                 {
-                    currentUnit.moveToCell(HexGridLayouts.instance.pathList);
-                    //
                     currentState = WarChessManagerState.MoveChess;
+                    //
+                    currentChooseUnit.moveToCell(HexGridLayouts.instance.pathList);
                 }
                 break;
             case WarChessManagerState.MoveChess:
@@ -85,6 +90,7 @@ public class WarChessManager : MonoBehaviour
 
     public void switchState(WarChessManagerState state) 
     {
+        HexGridLayouts.instance.clearPath();
         currentState = state;
     }
 
@@ -114,7 +120,7 @@ public class WarChessManager : MonoBehaviour
                 else if (currentState == WarChessManagerState.ActionChess)
                 {
                     currentCell = cell;
-                    HexGridLayouts.instance.caculatePath(currentUnit.currentCell, cell);
+                    HexGridLayouts.instance.caculatePath(currentChooseUnit, cell);
                 }
                 
             }
@@ -134,13 +140,14 @@ public class WarChessManager : MonoBehaviour
                 if (currentUnit != null) 
                 {
                     currentUnit.disableSelect();
+                    currentUnit = null;
                 }
             }
             //CameraControl.instance.followTransform = currentTarget;
         }
         else 
         {
-            if (currentCell != null && currentState != WarChessManagerState.ChooseChess)  
+            if (currentCell != null && currentState != WarChessManagerState.MoveChess)  
             {
                 currentCell.setColor(HexGridLayouts.instance.baseColor);
                 currentCell = null;

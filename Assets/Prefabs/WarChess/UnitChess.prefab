@@ -137,6 +137,8 @@ MonoBehaviour:
     curActionPointsRecovery: 0
     curMagicPointsRecovery: 0
     curMovement: 0
+    skill: []
+    spell: []
   currentState: 0
   currentCell: {fileID: 0}
   unitHealthBar: {fileID: 6742582249732164110, guid: 9229f13cca9244f43a0b7ddb559fdb23, type: 3}

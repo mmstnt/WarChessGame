@@ -705,7 +705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &400454344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +726,7 @@ MonoBehaviour:
   baseMaterial: {fileID: 2100000, guid: b36d0fc1f6b0a004e86e58261931a4fd, type: 2}
   baseColor: {r: 0.60784316, g: 0.60784316, b: 0.60784316, a: 0.60784316}
   highColor: {r: 0.60784316, g: 1, b: 0.60784316, a: 0.60784316}
+  chooseColor: {r: 0.60784316, g: 0.60784316, b: 1, a: 0.60784316}
   cellList: []
   startList: []
   endList: []
@@ -761,6 +762,7 @@ MonoBehaviour:
   currentCell: {fileID: 0}
   currentUnit: {fileID: 0}
   currentState: 0
+  unitHealthBarGroup: {fileID: 540867511}
   A: {fileID: 6723762692762425713, guid: 7d95da5aed6288a4c8b46773af9c45e3, type: 3}
   mouseClickEvent: {fileID: 11400000, guid: 601242dc50aa35242814351933ad34e0, type: 2}
 --- !u!1 &403776246
@@ -1286,8 +1288,8 @@ RectTransform:
   m_Children:
   - {fileID: 244386128}
   - {fileID: 1779349630}
-  - {fileID: 1559429828}
   - {fileID: 1979305744}
+  - {fileID: 1559429828}
   - {fileID: 658585676}
   - {fileID: 1464231861}
   - {fileID: 1537063627}
@@ -4739,7 +4741,7 @@ GameObject:
   - component: {fileID: 1779349632}
   - component: {fileID: 1779349631}
   m_Layer: 5
-  m_Name: SkillBox
+  m_Name: SkillBox(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5115,7 +5117,7 @@ GameObject:
   - component: {fileID: 1979305746}
   - component: {fileID: 1979305745}
   m_Layer: 5
-  m_Name: OtherBox (1)
+  m_Name: SkillBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

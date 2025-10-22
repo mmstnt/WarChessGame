@@ -15,6 +15,7 @@ public class BattleData
     public int magicPointsRecovery;
     public int movement;
 
+    [Header("基本概率")]
     public float hitRate;
     public float criticalHitRate;
     public float retaliationRate;
@@ -29,13 +30,20 @@ public class BattleData
     public int curActionPointsRecovery;
     public int curMagicPointsRecovery;
     public int curMovement;
+    
+    [Header("戰鬥概率")]
+    public float curHitRate;
+    public float curCriticalHitRate;
+    public float curRetaliationRate;
+    public float curDodgeRate;
 
-
+    [Header("戰鬥技能")]
+    public List<string> skill;
+    public List<string> spell;
 
     public BattleData(Dictionary<BasicAttribute, int> attributeDic)
     {
         battleAttributeConversion(attributeDic);
-        curHealth = healthMax;
     }
 
     public void battleAttributeConversion(Dictionary<BasicAttribute, int> attributeDic)
@@ -72,5 +80,23 @@ public class BattleData
         criticalHitRate = 0.64f * strength + 0.32f * wisdom;
         retaliationRate = 0.56f * constitution + 0.28f * wisdom;
         dodgeRate = 0.48f * dexterity + 0.24f * wisdom;
+        
+        curAttributeConversion();
+    }
+
+    private void curAttributeConversion() 
+    {
+        curHealth = healthMax;
+        curActionPoints = actionPointsMax;
+        curMagicPoints = magicPointsMax;
+
+        curActionPointsRecovery = actionPointsRecovery;
+        curMagicPointsRecovery = magicPointsRecovery;
+        curMovement = movement;
+
+        curHitRate = hitRate;
+        curCriticalHitRate = criticalHitRate;
+        curRetaliationRate = retaliationRate;
+        curDodgeRate = dodgeRate;
     }
 }

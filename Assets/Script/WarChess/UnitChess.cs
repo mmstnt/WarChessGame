@@ -20,7 +20,7 @@ public class UnitChess : MonoBehaviour
     public void Awake()
     {
         selfOutline = GetComponent<Outline>();
-        selfHealthBar = Instantiate(unitHealthBar).GetComponent<UnitChessHealthBar>();
+        selfHealthBar = Instantiate(unitHealthBar,WarChessManager.instance.unitHealthBarGroup).GetComponent<UnitChessHealthBar>();
         selfHealthBar.setUnitTarget(this);
     }
 
@@ -38,23 +38,26 @@ public class UnitChess : MonoBehaviour
     {
         if (currentState == UnitChessState.Select)
             return;
+        currentState = UnitChessState.PreSelect;
+
         selfOutline.enabled = true;
         selfOutline.OutlineColor = Color.white;
-        currentState = UnitChessState.PreSelect;
     }
 
-    public void enableSelect() 
+    public void enableSelect()
     {
-        selfOutline.OutlineColor = Color.blue;
         currentState = UnitChessState.Select;
+
+        selfOutline.OutlineColor = Color.blue;
     }
 
     public void disableSelect() 
     {
         if (currentState == UnitChessState.Select) 
             return;
-        selfOutline.enabled = false;
         currentState = UnitChessState.Idle;
+
+        selfOutline.enabled = false;
     }
 
     public void setCell(HexRenderer cell)
@@ -71,7 +74,7 @@ public class UnitChess : MonoBehaviour
         selfHealthBar.changeHealth();
     }
 
-    private IEnumerator moveCor(List<HexRenderer> path) 
+    private IEnumerator moveCor(List<HexRenderer> path)
     {
         while (path.Count > 0) 
         {
@@ -79,6 +82,7 @@ public class UnitChess : MonoBehaviour
             Vector3 originPos = transform.position;
             Vector3 desPos = path[0].transform.position;
 
+            //計算面朝方向
             GameObject tmp = new GameObject();
             tmp.transform.position = transform.position;
             tmp.transform.LookAt(desPos);

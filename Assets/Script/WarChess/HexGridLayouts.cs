@@ -16,6 +16,7 @@ public class HexGridLayouts : MonoBehaviour
     public Material baseMaterial;
     public Color baseColor;
     public Color highColor;
+    public Color chooseColor;
 
     [Header("清單")]
     public List<HexRenderer> cellList;
@@ -40,8 +41,10 @@ public class HexGridLayouts : MonoBehaviour
         layoutGrid();
     }
 
-    public void caculatePath(HexRenderer from, HexRenderer to) 
+    public void caculatePath(UnitChess unit, HexRenderer to) 
     {
+        HexRenderer from = unit.currentCell;
+        
         clearPath();
         startList.Add(from);
         while (startList.Count > 0) 
@@ -50,12 +53,23 @@ public class HexGridLayouts : MonoBehaviour
             if (workCell == to) 
             {
                 getPath(to);
-                for(int i = 0; i < pathList.Count; i++) 
+                pathList.Reverse();
+                
+                pathList[0].setColor(chooseColor); 
+                pathList.RemoveAt(0);
+
+                if (unit.battleData.curMovement < pathList.Count) 
+                {
+                    clearPath();
+                    break;
+                }
+
+                //高亮路線
+                for (int i = 0; i < pathList.Count; i++) 
                 {
                     pathList[i].setColor(highColor);
                 }
-                pathList.Reverse();
-                pathList.RemoveAt(0);
+
                 break;
             }
             else 
@@ -231,7 +245,7 @@ public class HexGridLayouts : MonoBehaviour
         return neighboursList;
     }
 
-    private void clearPath() 
+    public void clearPath() 
     {
         for (int i = 0; i < cellList.Count; i++) 
         {

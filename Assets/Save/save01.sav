@@ -9,12 +9,12 @@
         5
     ],
     "basicAttributeListValue": [
-        12,
-        17,
-        10,
         8,
-        14,
-        16
+        10,
+        16,
+        15,
+        10,
+        18
     ],
     "characterIDList": [
         "90001",
@@ -28,7 +28,7 @@
             "characterName": "主角",
             "characterID": "90001",
             "characterImage": {
-                "instanceID": 27740
+                "instanceID": 27748
             },
             "characterFavorability": 0,
             "characterType": 0
@@ -37,7 +37,7 @@
             "characterName": "曉琪",
             "characterID": "90002",
             "characterImage": {
-                "instanceID": 27742
+                "instanceID": 27750
             },
             "characterFavorability": 0,
             "characterType": 0
@@ -46,7 +46,7 @@
             "characterName": "迦夜",
             "characterID": "90003",
             "characterImage": {
-                "instanceID": 27744
+                "instanceID": 27752
             },
             "characterFavorability": 0,
             "characterType": 0
@@ -55,7 +55,7 @@
             "characterName": "古雷皮",
             "characterID": "90004",
             "characterImage": {
-                "instanceID": 27746
+                "instanceID": 27754
             },
             "characterFavorability": 0,
             "characterType": 0
